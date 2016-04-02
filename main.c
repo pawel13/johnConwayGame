@@ -12,7 +12,8 @@ int main(int argc, char **argv){
  
   printf("input file in main: %s\n",inputPngFilename);
 
-  readInputPng();  
+  makeBinaryPicture();
+//readPngFile();  
   
 #ifdef DEBUG
   printf("Input file in binary format:\n");  
@@ -25,6 +26,7 @@ int main(int argc, char **argv){
   printf("\n Result: \n");
   printBinaryPicture();
 #endif
+// savePngFile();
 
   return EXIT_SUCCESS;
 

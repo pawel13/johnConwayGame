@@ -24,6 +24,12 @@ ald: main.c input.c input.h pictures.c pictures.h map.c map.h
 	gcc  main.c input.c pictures.c map.c -DDEBUG
 
 
+alasd: main.c input.c input.h pictures.c pictures.h map.c map.h
+	gcc -c main.c input.c pictures.c map.c -DDEBUG
+	objdump -d main.o input.o pictures.o map.o
+
+example: shortExample.c
+	gcc shortExample.c -lpng -lm -lz
 clean:
 	rm *.o *.out
 

@@ -1,13 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+//#include <png.h>
+
 #include "pictures.h"
 #include "map.h"
 
-void readInputPng(){
+void readPngFile(){
+  
+  
+}
+
+void savePngFile(){
+  
+  
+}
+
+
+
+void makeBinaryPicture(){
   int i,j;
+  
+  
   //TEMPORARY SOLUTIONS FOR INITIALIZING AN ARRAY
- // srand(time(NULL));
+  // srand(time(NULL));
   srand(0);
   for(i=1;i<PIXELS-1;i++){
     for(j=1;j<PIXELS-1;j++){

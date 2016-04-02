@@ -1,8 +1,10 @@
 #ifndef _PICTURES_H_
 #define _PICTURES_H_
 
+void savePngFile();
+void readPngFile();
 
-void readInputPng();
+void makeBinaryPicture();
 void printBinaryPicture();
 
 
