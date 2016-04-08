@@ -4,15 +4,20 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <time.h>
+#include <png.h>
+
 #include "pictures.h"
 #include "map.h"
 
+<<<<<<< HEAD
 void readInputPng(){
 #include <png.h>
 
 #include "pictures.h"
 #include "map.h"
 
+=======
+>>>>>>> pngFiles
 #define PNG_DEBUG 3
 #define ALL_TO_ALIVE_RATIO 10 // value for initial map creation: 3 means 1 in 3 is alive
 
@@ -187,8 +192,10 @@ void processPngFile(void){
 
 void makeBinaryPicture(void){
   int i,j;
+  
+  
   //TEMPORARY SOLUTIONS FOR INITIALIZING AN ARRAY
- // srand(time(NULL));
+  // srand(time(NULL));
   srand(0);
   for(i=1;i<PIXELS-1;i++){
     for(j=1;j<PIXELS-1;j++){
