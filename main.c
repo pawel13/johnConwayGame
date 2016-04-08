@@ -13,20 +13,23 @@ int main(int argc, char **argv){
   printf("input file in main: %s\n",inputPngFilename);
 
   makeBinaryPicture();
-//readPngFile();  
+  readPngFile(inputPngFilename);  
   
 #ifdef DEBUG
   printf("Input file in binary format:\n");  
   printBinaryPicture();  
 #endif
 
+  
   doManyGenerations(numberOfGenerations);
+  processPngFile();
 
 #ifdef DEBUG 
   printf("\n Result: \n");
   printBinaryPicture();
 #endif
-// savePngFile();
+
+  savePngFile(outputPngFilename);
 
   return EXIT_SUCCESS;
 

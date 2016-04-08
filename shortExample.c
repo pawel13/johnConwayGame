@@ -11,9 +11,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+#include <time.h>
+#include <png.h>
 
 #define PNG_DEBUG 3
-#include <png.h>
+#define ALL_TO_ALIVE_RATIO 10 // value for initial map creation: 3 means 1 in 3 is alive
 
 void abort_(const char * s, ...)
 {
@@ -149,14 +151,16 @@ void write_png_file(char* file_name)
 
 void process_file(void)
 {
-        if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_RGB)
-                abort_("[process_file] input file is PNG_COLOR_TYPE_RGB but must be PNG_COLOR_TYPE_RGBA "
-                       "(lacks the alpha channel)");
+//        if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_RGB)
+//               abort_("[process_file] input file is PNG_COLOR_TYPE_RGB but must be PNG_COLOR_TYPE_RGBA "
+//                       "(lacks the alpha channel)");
 
-        if (png_get_color_type(png_ptr, info_ptr) != PNG_COLOR_TYPE_RGBA)
-                abort_("[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (%d) (is %d)",
-                       PNG_COLOR_TYPE_RGBA, png_get_color_type(png_ptr, info_ptr));
+//        if (png_get_color_type(png_ptr, info_ptr) != PNG_COLOR_TYPE_RGBA)
+//                abort_("[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (%d) (is %d)",
+//                       PNG_COLOR_TYPE_RGBA, png_get_color_type(png_ptr, info_ptr));
 
+        int theSameRandValue;
+        srand(time(NULL));
         for (y=0; y<height; y++) {
                 png_byte* row = row_pointers[y];
                 for (x=0; x<width; x++) {
@@ -164,9 +168,18 @@ void process_file(void)
                         printf("Pixel at position [ %d - %d ] has RGBA values: %d - %d - %d - %d\n",
                                x, y, ptr[0], ptr[1], ptr[2], ptr[3]);
 
-                        /* set red value to 0 and green value to the blue one */
-                        ptr[0] = 0;
-                        ptr[1] = ptr[2];
+                      
+                      theSameRandValue = ((rand()%(ALL_TO_ALIVE_RATIO)) / (ALL_TO_ALIVE_RATIO-1) ); // one in ALL_TO_ALIVE_RATIO shall be black (alive)
+                      theSameRandValue = (theSameRandValue + 1 ) % 2; // 0 and 1 substituted
+                      theSameRandValue *= 255; // 0 is black, 255 is white;
+                      printf("theSameRandValue: %d\n", theSameRandValue);
+                      ptr[0] = theSameRandValue;
+                      ptr[1] = theSameRandValue;
+                      ptr[2] = theSameRandValue;
+                      ptr[3] = 255;
+                     
+                     
+                     // ptr[0] = 255; ptr[1] = 255; ptr[2] = 255; ptr[3] = 255;  // full white untransparent canvas
                 }
         }
 }
