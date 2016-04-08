@@ -1,17 +1,18 @@
-#include <stdio.h>
+/*
+ * Copyright 2002-2010 Guillaume Cottenceau.
+ *
+ * This software may be freely redistributed under the terms
+ * of the X11 license.
+ *
+ */
+
+#include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#include <unistd.h>
 #include <time.h>
-#include "pictures.h"
-#include "map.h"
-
-void readInputPng(){
 #include <png.h>
-
-#include "pictures.h"
-#include "map.h"
 
 #define PNG_DEBUG 3
 #define ALL_TO_ALIVE_RATIO 10 // value for initial map creation: 3 means 1 in 3 is alive
@@ -37,8 +38,9 @@ png_infop info_ptr;
 int number_of_passes;
 png_bytep * row_pointers;
 
-void readPngFile(char* file_name){
-         char header[8];    // 8 is the maximum size that can be checked
+void read_png_file(char* file_name)
+{
+        char header[8];    // 8 is the maximum size that can be checked
 
         /* open file and test for it being a png */
         FILE *fp = fopen(file_name, "rb");
@@ -87,11 +89,12 @@ void readPngFile(char* file_name){
         png_read_image(png_ptr, row_pointers);
 
         fclose(fp);
-  
 }
 
-void savePngFile(char* file_name){
-          /* create file */
+
+void write_png_file(char* file_name)
+{
+        /* create file */
         FILE *fp = fopen(file_name, "wb");
         if (!fp)
                 abort_("[write_png_file] File %s could not be opened for writing", file_name);
@@ -143,12 +146,11 @@ void savePngFile(char* file_name){
         free(row_pointers);
 
         fclose(fp);
-  
 }
 
 
-void processPngFile(void){
-
+void process_file(void)
+{
 //        if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_RGB)
 //               abort_("[process_file] input file is PNG_COLOR_TYPE_RGB but must be PNG_COLOR_TYPE_RGBA "
 //                       "(lacks the alpha channel)");
@@ -180,54 +182,17 @@ void processPngFile(void){
                      // ptr[0] = 255; ptr[1] = 255; ptr[2] = 255; ptr[3] = 255;  // full white untransparent canvas
                 }
         }
-
 }
 
 
+int main(int argc, char **argv)
+{
+        if (argc != 3)
+                abort_("Usage: program_name <file_in> <file_out>");
 
-void makeBinaryPicture(void){
-  int i,j;
-  //TEMPORARY SOLUTIONS FOR INITIALIZING AN ARRAY
- // srand(time(NULL));
-  srand(0);
-  for(i=1;i<PIXELS-1;i++){
-    for(j=1;j<PIXELS-1;j++){
-      point[i][j].x = i;
-      point[i][j].y = j;
-      point[i][j].prevState=rand()%2;
-    }
-  }
+        read_png_file(argv[1]);
+        process_file();
+        write_png_file(argv[2]);
 
-  for(i = 0; i <= PIXELS - 1; i++){
-      point[i][0].x = i; 
-      point[i][0].y = 0; 
-      point[i][0].prevState = 0; 
-
-      point[i][PIXELS-1].x = i;
-      point[i][PIXELS-1].y = PIXELS-1;
-      point[i][PIXELS-1].prevState = 0;
-
-      point[0][i].x = 0; 
-      point[0][i].y = i; 
-      point[0][i].prevState = 0; 
-  
-      point[PIXELS-1][i].x = PIXELS-1; 
-      point[PIXELS-1][i].y = i; 
-      point[PIXELS-1][i].prevState = 0; 
-  }
-  
+        return 0;
 }
-
-void printBinaryPicture(void){
-  int i,j;
-  for(i = 0; i < PIXELS; i++){
-    for(j = 0; j < PIXELS; j++){
-      printf("%d",point[i][j].prevState);
-    }
-    printf("\n");
-  }
-
-}
-}
-
-

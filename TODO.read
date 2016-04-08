@@ -1,0 +1,1 @@
+in readPngFile() implement saving bit values to your struct or in processPngFile() use FSM without it (may be even better)
