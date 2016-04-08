@@ -7,8 +7,8 @@ void savePngFile(char*);
 void readPngFile(char*);
 void processPngFile(void);
 
-void readInputPng();
-void printBinaryPicture();
+void makeBinaryPicture(void);
+void printBinaryPicture(void);
 
 
 #endif
