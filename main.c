@@ -12,10 +12,9 @@ int main(int argc, char **argv){
  
   printf("input file in main: %s\n",inputPngFilename);
 
-<<<<<<< HEAD
+
   readInputPng();  
-=======
->>>>>>> pngFiles
+
   makeBinaryPicture();
   readPngFile(inputPngFilename);  
   
